@@ -1,3 +1,3 @@
 <?php
-include "templates/header.php";
+include "inc/header.php";
 echo "Hello World";
