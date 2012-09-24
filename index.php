@@ -1,5 +1,5 @@
 <?php
-require ("app/autoloader.php");
+require ("libs/autoloader.php");
 require ("libs/Slim/Slim.php");
 include ("app/funcoes.php");
 include ("app/config.php");

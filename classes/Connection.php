@@ -14,11 +14,21 @@
                 }
             }
             catch (PDOException $e) {
-                echo 'Connection failed: ' . $e->getMessage( );
+                echo 'A conexão falhou: ' . $e->getMessage();
                 return false;
             }
         }
 
+        public function setDsn($dsn){
+            $this->dsn = $dsn;
+        }
+        public function setUser($user){
+            $this->user = $user;
+        }
+        public function setSenha($password){
+            $this->password = $password;
+        }
+        
         function __destruct() {
             $this->handle = NULL;
         }
