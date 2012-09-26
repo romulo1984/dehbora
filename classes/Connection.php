@@ -1,8 +1,8 @@
 <?php
     class Connection extends PDO {
-        private $dsn = 'mysql:dbname=dehbora1_2;host=dbmy0020.whservidor.com';
-        private $user = 'dehbora1_2';
-        private $password = 'dehbora180382';
+        private $dsn = 'mysql:dbname=dehbora;host=www.redetribuna.com.br';
+        private $user = 'tribunaonline';
+        private $password = 'tribunaonline1';
         public $handle = null;
 
         function __construct() {

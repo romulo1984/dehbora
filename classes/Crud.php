@@ -7,7 +7,7 @@
     * @access public
     */
     class Crud extends Connection{
-        private $pdo;
+        public $pdo;
         private $tabela;
         
         /**

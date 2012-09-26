@@ -1,4 +1,4 @@
 <?php
 //Constantes
-define("BASE", "http://localhost/studiovenom/");
+define("BASE", "http://localhost/dehbora/");
 ?>
