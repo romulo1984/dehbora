@@ -3,7 +3,6 @@
 
 require ("libs/autoloader.php");
 require ("libs/Slim/Slim.php");
-require ("libs/Facebook/facebook.php");
 include ("app/funcoes.php");
 include ("app/config.php");
 
