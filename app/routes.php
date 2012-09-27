@@ -18,32 +18,11 @@ function login() {
 }
 function entrar() {
     $app = Slim::getInstance();
-    $facebook = new Facebook(array(
-        'appId'  => '419563918092035',
-        'secret' => 'a03a80f9985a5d7bc9c38e2817f64aea',
-    ));
-    $fb = $facebook->getUser();
-    if ($fb) {
-        $logoutUrl = $facebook->getLogoutUrl();
-    } else {
-        $loginUrl = $facebook->getLoginUrl();
-    }
-    
-    $app->redirect($loginUrl);
-    
-    if ($fb) {
-        $user_fb = $facebook->api('/me');
-        $l = new Login();
-        $l->logar($user_fb['id'], $user_fb['name'], $user_fb['email'], 'https://graph.facebook.com/'.$user_fb["id"].'/picture');
-    }else {
-        $fb = null;
-        $errors['erro'] = "Não foi possível conectar";
-    }
-
+    $email = 'romulo@gmail.com';
     $errors = null;
     
-    if($l->logado == false){
-        $errors['email'] = "Não foi possível conectar";
+    if($email != 'romulo@gmail.com'){
+        $errors['email'] = "Dados inv�lidos";
     }
     
     if (count($errors) > 0) {
@@ -51,7 +30,7 @@ function entrar() {
         $app->redirect('/dehbora/login');
     }
     
-    $_SESSION['dehbora']['user'] = $e->user;
+    $_SESSION['dehbora']['user'] = $email;
     
     if (isset($_SESSION['dehbora']['urlRedirect'])) {
        $tmp = $_SESSION['dehbora']['urlRedirect'];
@@ -64,7 +43,6 @@ function entrar() {
 
 function logout() {
     $app = Slim::getInstance();
-    $app->redirect($loginUrl);
     unset($_SESSION['dehbora']['user']);
     $app->view()->setData('user', null);
     $app->redirect('/dehbora/login');
