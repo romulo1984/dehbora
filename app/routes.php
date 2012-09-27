@@ -22,7 +22,7 @@ function entrar() {
     $errors = null;
     
     if($email != 'romulo@gmail.com'){
-        $errors['email'] = "Dados inv�lidos";
+        $errors['email'] = "Dados inválidos";
     }
     
     if (count($errors) > 0) {
