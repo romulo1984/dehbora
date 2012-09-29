@@ -6,6 +6,16 @@ $app->get("/entrar", "entrar");
 $app->get("/logout", "logout");
 $app->get("/perfil", $authenticate($app), "perfil");
 $app->get("/noticias", $authenticate($app), "noticias");
+$app->get("/teste", "teste");
+
+function teste(){
+    $email = 'romulo@gmail.com';
+    $senha = '123456';
+    $login = new Login();    
+    
+    $login->valida($email, $senha);
+}
+
 
 function home() {
     $app = Slim::getInstance();
@@ -19,18 +29,23 @@ function login() {
 function entrar() {
     $app = Slim::getInstance();
     $email = 'romulo@gmail.com';
+    $senha = '123456';
     $errors = null;
+    $login = new Login();    
     
-    if($email != 'romulo@gmail.com'){
-        $errors['email'] = "Dados inválidos";
+    $ok = $login->valida($email, $senha);
+
+    if(!$ok){
+        $errors['incorreto'] = "Dados inválidos";
     }
     
     if (count($errors) > 0) {
         $app->flash('errors', $errors);
         $app->redirect('/dehbora/login');
+        exit;
     }
     
-    $_SESSION['dehbora']['user'] = $email;
+    $login->gravaSessao();
     
     if (isset($_SESSION['dehbora']['urlRedirect'])) {
        $tmp = $_SESSION['dehbora']['urlRedirect'];
@@ -43,7 +58,8 @@ function entrar() {
 
 function logout() {
     $app = Slim::getInstance();
-    unset($_SESSION['dehbora']['user']);
+    $l = new Login();
+    $l->logout();
     $app->view()->setData('user', null);
     $app->redirect('/dehbora/login');
 }

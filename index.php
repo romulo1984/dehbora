@@ -14,7 +14,7 @@ $app->add(new Slim_Middleware_SessionCookie(array('secret' => '98897qwer65465qwe
 
 $authenticate = function ($app) {
     return function () use ($app) {
-        if (!isset($_SESSION['dehbora']['user']['facebook_id'])) {
+        if (!isset($_SESSION['dehbora']['user'])) {
             $_SESSION['dehbora']['urlRedirect'] = $app->request()->getPathInfo();
             $app->flash('error', 'Você precisa se logar.');
             $app->redirect('/dehbora/login');
@@ -24,7 +24,7 @@ $authenticate = function ($app) {
 
 $app->hook('slim.before.dispatch', function() use ($app) {
     $user = null;
-    if(isset($_SESSION['dehbora']['user']['facebook_id'])) {
+    if(isset($_SESSION['dehbora']['user'])) {
         $user = $_SESSION['dehbora']['user'];
     }
     $app->view()->setData('user', $user);

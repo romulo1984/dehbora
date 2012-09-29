@@ -1,6 +1,5 @@
 <?php
     class Login extends Connection {
-        public $logado = null;
         public $user = array();
         
         public function conecta(){
@@ -8,44 +7,39 @@
             return $conn;
         }
         
-        public function verificaFb($fb_id){
+        public function codificaSenha($senha){
+            //return sha1($senha);
+            return $senha;
+        }
+        
+        public function valida($email, $senha){
+            $senha = $this->codificaSenha($senha);
             $con = $this->conecta();
-            $query = 'SELECT * FROM users WHERE facebook_id = ?';
+
+            $query = "SELECT * FROM users WHERE email = ? AND senha = ?";
             
             $stmt = $con->prepare($query);
-            $stmt->bindValue(1, $fb_id);
+            $stmt->bindParam(1, $email);
+            $stmt->bindParam(2, $senha);
             $stmt->execute();
             
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->user = $result;
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo_pre($result);
+            die;
             
             if(count($result) > 0){
+                $this->user = $result;
                 return true;
             }else{
                 return false;
             }
         }
         
-        public function grava($fb_id, $nome, $email, $image){
-            $con = $this->conecta();
-            $query = 'INSERT INTO users (nome, email, facebook_id, image_facebook) VALUES (?, ?, ?, ?)';
-            
-            $stmt = $con->prepare($query);
-            $stmt->bindValue(1, $nome);
-            $stmt->bindValue(2, $email);
-            $stmt->bindValue(3, $fb_id);
-            $stmt->bindValue(4, $image);
-            $stmt->execute();
+        public function gravaSessao(){
+            return $_SESSION['dehbora']['user'] = $this->user;
         }
         
-        public function logar($fb_id, $nome, $email, $image){
-            $ok = $this->verificaFb($fb_id);
-            if($ok){
-                $this->logado = true;
-            }else {
-                $this->grava($fb_id, $nome, $email, $image);
-                $this->verificaFb($fb_id);
-                $this->logado = true;
-            }
+        public function logout(){
+            unset($_SESSION['dehbora']['user']);
         }
     }
