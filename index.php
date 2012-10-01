@@ -10,14 +10,19 @@ $autoloader = new Autoloader();
 $app = new Slim();
 
 $app->contentType('text/html; charset=utf-8');
-$app->add(new Slim_Middleware_SessionCookie(array('secret' => '98897qwer65465qwe9r79qw9e354as68dh56k6lks6df8g')));
+$app->add(new Slim_Middleware_SessionCookie(
+        array(
+            'secret' => '98897qwer65465qwe9r79qw9e354as68dh56k6lks6df8g',
+            'expires' => '60 minutes'
+            )
+        ));
 
 $authenticate = function ($app) {
     return function () use ($app) {
         if (!isset($_SESSION['dehbora']['user'])) {
             $_SESSION['dehbora']['urlRedirect'] = $app->request()->getPathInfo();
             $app->flash('error', 'Você precisa se logar.');
-            $app->redirect('/dehbora/login');
+            $app->redirect(URL_BASE.'/login');
         }
     };
 };

@@ -29,7 +29,7 @@
             $this->password = $password;
         }
         
-        function __destruct() {
-            $this->handle = NULL;
-        }
+//        function __destruct() {
+//            $this->handle = NULL;
+//        }
 }

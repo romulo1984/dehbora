@@ -27,13 +27,13 @@
             <ul class="nav pull-right">
                 <li class="divider-vertical"></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Rômulo Guimarães<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <?php echo $user['nome']." (".$user['email'].")"; ?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#"><i class="icon-pencil"></i> Perfil</a></li>
                         <li><a href="#"><i class="icon-th-list"></i> Feeds</a></li>
                         <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="icon-trash"></i> Excluir Conta</a></li>
+                        <li><a href="/dehbora/logout"><i class="icon-off"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
