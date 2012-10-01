@@ -20,7 +20,7 @@ function func_js(array $url){
 }
 
 //Adiciona informações de metadados
-function func_meta($title = "Admin Studio Venom", $charset = "utf-8", $description = "", $author = ""){
+function func_meta($title = "Dehbora", $charset = "utf-8", $description = "", $author = ""){
     $return = array();
     $return[] = "<meta charset='".$charset."' />".PHP_EOL;
     $return[] = "<title>".$title."</title>".PHP_EOL;

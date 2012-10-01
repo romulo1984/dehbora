@@ -129,4 +129,3 @@
 </div>
 <?php
     include('templates/inc/footer.php');
-?>
