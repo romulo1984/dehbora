@@ -68,4 +68,16 @@ function perfil() {
 function noticias() {
     $app = Slim::getInstance();
     echo "<h2>Esta é a página com notícias</h2>";
+    
+    $feeds = new Crud();
+    $feeds->setTabela('feeds');
+    
+    $user = $app->view()->getData('user');
+    
+    $l = $feeds->consultar(
+            array('nome', 'url', 'publico', 'id_categoria'),
+            'id_user ='.$user['id']
+         )->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo_pre($l);
 }
