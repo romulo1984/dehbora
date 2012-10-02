@@ -1,4 +1,20 @@
 <?php
+    //Meta informações, CSS e Javascript
+    $css = func_css(
+        array(
+            "public/css/bootstrap.css",
+            "public/css/bootstrap-responsive.css",
+            "public/css/layout.css"
+        )
+    );
+    $js = func_js(
+            array(
+                "http://code.jquery.com/jquery-latest.js",
+                "public/js/bootstrap.js"
+            )
+    );
+    $meta = func_meta("Dehbora");
+
     include('templates/inc/header.php');
     include('templates/inc/nav_home.php');
     include('templates/inc/sidebar.php');
