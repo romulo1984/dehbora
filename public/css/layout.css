@@ -22,6 +22,23 @@ body {
     width: 50px;
     height: 50px;
 }
+.item-feed {
+    margin-bottom: 20px;
+}
+.item-feed h4, hr{
+    clear: both;
+}
+.item-feed img{
+    position: relative;
+    margin-right: 15px;
+    margin-bottom: 20px;
+    /* display: none; */
+}
+.descricao-feed {
+    margin-top: 6px;
+    position:relative;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
     height: 10px;

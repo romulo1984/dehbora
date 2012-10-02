@@ -1,10 +1,11 @@
 <?php
 // https://github.com/briannesbitt/Slim-ContextSensitiveLoginLogout/blob/master/index.php
 
-require ("libs/autoloader.php");
-require ("libs/Slim/Slim.php");
-include ("app/funcoes.php");
-include ("app/config.php");
+require ("libs/autoloader.php"); //Autoload para as classes próprias
+require ("libs/Simplepie/autoloader.php"); //Autoload para as Classes do SimplePie, para leitura de RSS
+require ("libs/Slim/Slim.php"); //Micro-framework Slim, para gerenciamento de rotas e alguns Helpers
+include ("app/funcoes.php"); //Funções próprias, como CSS, Javascript e Meta
+include ("app/config.php"); //Configurações gerais do sistema, através de Constantes.
 
 $autoloader = new Autoloader();
 $app = new Slim();

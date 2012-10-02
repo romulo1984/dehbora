@@ -1,16 +1,63 @@
 <?php
 //Rotas da Aplicação
 $app->get("/", $authenticate($app), "home");
+$app->get("/feeds/:id", $authenticate($app), "feeds");
 $app->get("/login", "login");
 $app->post("/entrar", "entrar");
 $app->get("/logout", "logout");
 $app->get("/perfil", $authenticate($app), "perfil");
 $app->get("/noticias", $authenticate($app), "noticias");
 
+//function home() {
+//    $app = Slim::getInstance();
+//    $app->render('home.php');
+//}
+
 function home() {
     $app = Slim::getInstance();
-    $app->render('home.php');
+    
+    $feeds = new Crud();
+    $feeds->setTabela('feeds');
+    
+    $user = $app->view()->getData('user');
+    
+    $l = $feeds->consultar(
+            array('nome', 'url', 'publico', 'id_categoria'),
+            'id_user ='.$user['id']
+         )->fetchAll(PDO::FETCH_ASSOC);
+    
+    $read = new SimplePie();
+    $read->set_feed_url($l[2]['url']);
+
+    $read->enable_cache(false);
+    $read->init();
+    $app->render('home.php', array('rss' => $read->get_items()));
 }
+function feeds($id) {
+    $app = Slim::getInstance();
+    
+    $feeds = new Crud();
+    $feeds->setTabela('feeds');
+    
+    $user = $app->view()->getData('user');
+    
+    $l = $feeds->consultar(
+            array('nome', 'url', 'publico', 'id_categoria'),
+            'id_user ='.$user['id'].' AND id ='.$id
+         )->fetchAll(PDO::FETCH_ASSOC);
+
+    if(count($l) > 0){
+        $read = new SimplePie();
+        $read->set_feed_url($l[0]['url']);
+
+        $read->enable_cache(false);
+        $read->init();
+        $app->render('home.php', array('rss' => $read->get_items(), 'nome' => $l[0]['nome']));
+    } else {
+        echo "Esta página não existe";
+    }
+}
+
 function login() {
     $app = Slim::getInstance();
     
@@ -64,20 +111,4 @@ function perfil() {
     echo "<h2>Esta é a página do Perfil</h2>";
     $user = $app->view()->getData('user');
     var_dump($user);
-}
-function noticias() {
-    $app = Slim::getInstance();
-    echo "<h2>Esta é a página com notícias</h2>";
-    
-    $feeds = new Crud();
-    $feeds->setTabela('feeds');
-    
-    $user = $app->view()->getData('user');
-    
-    $l = $feeds->consultar(
-            array('nome', 'url', 'publico', 'id_categoria'),
-            'id_user ='.$user['id']
-         )->fetchAll(PDO::FETCH_ASSOC);
-    
-    echo_pre($l);
 }

@@ -4,6 +4,9 @@ class Autoloader {
         spl_autoload_register(array($this, 'loader'));
     }
     private function loader($class) {
-        include "classes/{$class}.php";
+        $path = "classes/{$class}.php";
+        if(file_exists($path)){
+            include $path;
+        }
     }
 }
