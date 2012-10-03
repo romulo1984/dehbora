@@ -24,6 +24,7 @@ body {
 }
 .item-feed {
     margin-bottom: 20px;
+    margin-right: 15px;
 }
 .item-feed h4, hr{
     clear: both;

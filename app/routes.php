@@ -2,6 +2,8 @@
 //Rotas da Aplicação
 $app->get("/", $authenticate($app), "home");
 $app->get("/feeds/:id", $authenticate($app), "feeds");
+$app->post("/feeds/add", $authenticate($app), "add_feed");
+$app->delete("/feeds/detetar", $authenticate($app), "deletar_feed");
 $app->get("/login", "login");
 $app->post("/entrar", "entrar");
 $app->get("/logout", "logout");
@@ -15,7 +17,6 @@ $app->get("/noticias", $authenticate($app), "noticias");
 
 function home() {
     $app = Slim::getInstance();
-    
     $feeds = new Crud();
     $feeds->setTabela('feeds');
     
@@ -35,6 +36,15 @@ function home() {
 }
 function feeds($id) {
     $app = Slim::getInstance();
+    
+    $app->view()->setData('id_feed_atual', $id);
+    
+    if(!is_numeric($id)){
+        $errors = "A página não existe";
+        $app->flash('errors', $errors);
+        $app->redirect(URL_BASE.'/');
+        exit;
+    }
     
     $feeds = new Crud();
     $feeds->setTabela('feeds');
@@ -58,6 +68,43 @@ function feeds($id) {
     }
 }
 
+function add_feed(){
+    $app = Slim::getInstance();
+    $nome = $_POST['nome'];
+    $url = $_POST['url'];
+    $user = $app->view()->getData('user');
+    
+    if(isset($_POST['publico'])){
+        $publico = 1;
+    }else {
+        $publico = 0;
+    }
+    
+    $add_feed = new Crud();
+    $add_feed->setTabela('feeds');
+    
+    $a_f = $add_feed->inserir(
+                array(
+                    "nome" => $nome,
+                    "url" => $url,
+                    "publico" => $publico,
+                    "id_user" => $user['id']
+                )
+            );
+    
+    if($a_f){
+        $app->flash('errors', 'O Feed não pode ser adicionado');
+        $app->redirect(URL_BASE.'/');
+    }else {
+        $app->flash('sucesso', 'Feed Adicionado com Sucesso');
+        $app->redirect(URL_BASE.'/');
+    }
+}
+
+function deletar_feed(){
+    
+}
+
 function login() {
     $app = Slim::getInstance();
     
@@ -78,7 +125,7 @@ function entrar() {
     
     $errors = null;
     if($ok == false){
-        $errors['incorreto'] = "Dados inválidos";
+        $errors = "Dados inválidos";
     }
     
     if (count($errors) > 0) {

@@ -10,7 +10,8 @@
     $js = func_js(
             array(
                 "http://code.jquery.com/jquery-latest.js",
-                URL_BASE."/public/js/bootstrap.js"
+                URL_BASE."/public/js/bootstrap.js",
+                URL_BASE."/public/js/custom.js"
             )
     );
     $meta = func_meta("Dehbora");
@@ -33,16 +34,6 @@
                     <div class="descricao-feed"><?php echo $item->get_description(); ?></div>
                 </div><hr>
             <?php endforeach; ?>
-        <div class="pagination">
-            <ul>
-                <li><a href="#">Anterior</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Próximo</a></li>
-            </ul>
-        </div>
             </div>
         </div>
     </div>

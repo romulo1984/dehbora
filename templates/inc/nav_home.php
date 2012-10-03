@@ -6,19 +6,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="http://bootsnipp.com">Dehbora</a>
+        <a class="brand" href="<?php echo URL_BASE; ?>/">Dehbora</a>
         <div class="nav-collapse">
             <ul class="nav">
-            <li class=""><a href="http://bootsnipp.com/"><i class="icon-home"></i> Home</a></li>
-            <li class="active dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i> Feeds <b class="caret"></b></a>
+            <li class=""><a href="<?php echo URL_BASE; ?>/"><i class="icon-home"></i> Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-th-list"></i> Feeds <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Info</a></li>
-                    <li><a href="#">UOL Tecnologia</a></li>
-                    <li><a href="#">Terra Tecnologia</a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header">Feeds Compartilhados</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
+                    <li><a href="#addFeed" data-toggle="modal"><i class="icon-plus"></i> Adicionar Feed</a></li>
+                    <li><a href="#"><i class="icon-edit"></i> Gerenciar Feeds</a></li>
                 </ul>
             </li>
             <li class=""><a href="#"><i class="icon-question-sign"></i> Como funciona?</a></li>
@@ -30,8 +25,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <?php echo $user['nome']." (".$user['email'].")"; ?><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#"><i class="icon-pencil"></i> Perfil</a></li>
-                        <li><a href="#"><i class="icon-th-list"></i> Feeds</a></li>
-                        <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
+                        <li><a href="#"><i class="icon-heart"></i> Amigos</a></li>
                         <li class="divider"></li>
                         <li><a href="/dehbora/logout"><i class="icon-off"></i> Logout</a></li>
                     </ul>

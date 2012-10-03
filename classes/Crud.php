@@ -36,11 +36,20 @@
          */
         public function inserir(array $campos){
             $coluna = implode(", ",  array_keys($campos));
-            $valor = "'".implode("', '", array_values($campos))."'";
-            
-            $query = "INSERT INTO {$this->tabela} ({$coluna}) VALUES ({$valor})";
+            $valor = array_values($campos);
+            $valorQuery = implode(", ", array_fill(0, count($valor), '?'));
 
-            if($this->conectar()->exec($query) == 1){
+            $query = "INSERT INTO {$this->tabela} ({$coluna}) VALUES ({$valorQuery})";
+            
+            $stmt = $this->conectar()->prepare($query);
+            foreach ($valor as $k => $v){
+                $stmt->bindValue($k+1, $v);
+            }
+            $stmt->execute() or die(print_r($stmt->errorInfo()));
+
+            $count = $stmt->rowCount();
+            
+            if($count > 0){
                 return true;
             }else{
                 return false;
