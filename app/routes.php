@@ -93,10 +93,10 @@ function add_feed(){
             );
     
     if($a_f){
-        $app->flash('errors', 'O Feed não pode ser adicionado');
+        $app->flash('sucesso', 'Feed Adicionado com Sucesso');
         $app->redirect(URL_BASE.'/');
     }else {
-        $app->flash('sucesso', 'Feed Adicionado com Sucesso');
+        $app->flash('errors', 'O Feed não pode ser adicionado');
         $app->redirect(URL_BASE.'/');
     }
 }
