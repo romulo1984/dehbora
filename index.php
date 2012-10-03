@@ -7,6 +7,7 @@ require ("libs/Slim/Slim.php"); //Micro-framework Slim, para gerenciamento de ro
 include ("app/funcoes.php"); //Funções próprias, como CSS, Javascript e Meta
 include ("app/config.php"); //Configurações gerais do sistema, através de Constantes.
 
+date_default_timezone_set('America/Sao_Paulo');
 $autoloader = new Autoloader();
 $app = new Slim();
 

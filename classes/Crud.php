@@ -76,6 +76,8 @@
             $limit = ($limit == null) ? null : "LIMIT {$limit}";
             
             $query = "SELECT {$select} FROM {$this->tabela} {$where} {$order} {$limit}";
+            
+            //echo $query; die;
             $result = $this->conectar()->query($query);
             return $result;
         }

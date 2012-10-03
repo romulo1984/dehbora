@@ -39,7 +39,8 @@
                                         
                                         $l_f = $lista_feeds->consultar(
                                                 array('id', 'nome', 'url', 'publico', 'id_categoria'),
-                                                'id_user ='.$user['id']
+                                                'id_user ='.$user['id'],
+                                                'created DESC'
                                              )->fetchAll(PDO::FETCH_ASSOC);
                                         
                                         foreach($l_f as $l){
@@ -49,6 +50,8 @@
                                             }
                                             echo '"><a href="'.URL_BASE.'/feeds/'.$l['id'].'">'.$l['nome'].'</a></li>';
                                         }
+                                        
+                                        $nome_feed_inicial = $l_f[0]['nome'];
                                     ?>
                                     <li><a href="#addFeed" style="color: green !important;" data-toggle="modal"><i class="icon-plus"></i> Adicionar Feed</a></li>
                                     <li><a href="#" style="color: green !important;"><i class="icon-edit"></i> Gerenciar Feeds</a></li>
@@ -64,7 +67,7 @@
                                     </p>
                                 </ul>
                             </div>
-                            <!-- <div class="well img-margin">
+                             <div class="well img-margin">
                                 <img src="https://graph.facebook.com/romulo1984/picture" alt="">
                                 <img src="https://graph.facebook.com/sandrofsantos/picture" alt="">
                                 <img src="https://graph.facebook.com/MonicaG.ventorim/picture" alt="">
@@ -73,7 +76,7 @@
                                 <img src="https://graph.facebook.com/igorantcaetano/picture" alt="">
                                 <img src="https://graph.facebook.com/raphael.amorim/picture" alt="">
                             </div>
-                            -->
+                            
                         </div>
                         
                         <?php if(isset($_SESSION['slim.flash']['errors'])) { ?>

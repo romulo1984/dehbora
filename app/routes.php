@@ -23,14 +23,18 @@ function home() {
     $user = $app->view()->getData('user');
     
     $l = $feeds->consultar(
-            array('nome', 'url', 'publico', 'id_categoria'),
-            'id_user ='.$user['id']
-         )->fetchAll(PDO::FETCH_ASSOC);
+                array('id', 'nome', 'url', 'publico', 'id_categoria'),
+                'id_user ='.$user['id'],
+                'created DESC'
+                )->fetchAll(PDO::FETCH_ASSOC);
+    
+    $url_feed_inicial = $l[0]['url'];
     
     $read = new SimplePie();
-    $read->set_feed_url($l[2]['url']);
+    $read->enable_cache(true);
+    $read->set_feed_url($url_feed_inicial);
 
-    $read->enable_cache(false);
+    //$read->enable_cache(false);
     $read->init();
     $app->render('home.php', array('rss' => $read->get_items()));
 }
@@ -58,9 +62,9 @@ function feeds($id) {
 
     if(count($l) > 0){
         $read = new SimplePie();
+        $read->enable_cache(true);
         $read->set_feed_url($l[0]['url']);
 
-        $read->enable_cache(false);
         $read->init();
         $app->render('home.php', array('rss' => $read->get_items(), 'nome' => $l[0]['nome']));
     } else {
@@ -70,6 +74,21 @@ function feeds($id) {
 
 function add_feed(){
     $app = Slim::getInstance();
+    
+    $count_erro = 0;
+    
+    if(!$_POST['nome']){
+        $count_erro += 1;
+    } elseif(!$_POST['url']){
+        $count_erro += 1;
+    }
+    
+    if($count_erro > 0){
+        $app->flash('errors', 'Os campos <strong>NOME</strong> e <strong>URL</strong> são obrigatórios!');
+        $app->redirect(URL_BASE.'/');
+        exit;
+    }
+    
     $nome = $_POST['nome'];
     $url = $_POST['url'];
     $user = $app->view()->getData('user');

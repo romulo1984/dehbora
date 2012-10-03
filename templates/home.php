@@ -23,14 +23,14 @@
 <div class="row">
     <div class="span4">
         <div class="well">
-            <i class="icon-tag"></i> Feeds de <span class="label label-info"><?php if(isset($nome)) echo $nome; else echo "Terra - Tecnologia"; ?></span>
+            <i class="icon-tag"></i> Feeds de <span class="label label-info"><?php if(isset($nome)) echo $nome; else echo $nome_feed_inicial; ?></span>
             <hr>
             <span class="divider"></span>
             <div style="overflow-y:scroll;overflow-x: hidden;height: 500px;">
             <?php foreach ($rss as $item):?>
                 <div class="item-feed">
                     <h4><a href="#"><?php echo $item->get_title(); ?></a></h4>
-                    <small>Postado dia <?php echo $item->get_date('d/m/Y | h:i a'); ?></small>
+                    <small>Postado dia <?php echo $item->get_date('d/m/Y | H:i'); ?></small>
                     <div class="descricao-feed"><?php echo $item->get_description(); ?></div>
                 </div><hr>
             <?php endforeach; ?>
