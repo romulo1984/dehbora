@@ -20,14 +20,6 @@
     include('/templates/inc/nav_home.php');
     include('/templates/inc/sidebar.php');
 ?>
-<script type="text/javascript">
-    function lerFeed(permalink, titulo) {
-        document.getElementById("feed_permalink").value = permalink;
-        document.lerfeed.action="<?php echo URL_BASE; ?>/noticia/" + titulo;
-        document.lerfeed.submit();
-    }
-</script>
-
 <div class="row">
     <div class="span4">
         <div class="well">
@@ -36,16 +28,21 @@
             <span class="divider"></span>
             <div style="overflow-y:scroll;overflow-x: hidden;height: 500px;">
             <?php foreach ($rss as $item):?>
-                <?php $link_permanente = urlSEO($item->get_title()); ?>
+                <?php $nome_form = rand(); ?>
                 <div class="item-feed">
-                        <h4><a href="javascript:void(0);" onclick="lerFeed('<?php echo $item->get_permalink(); ?>','<?php echo $link_permanente; ?>');"><?php echo $item->get_title(); ?></a></h4>
-                    <small>Postado dia <?php echo $item->get_date('d/m/Y | H:i'); ?></small>
+                        <h4><a href="javascript:void(0);" onclick="document['<?php echo $nome_form; ?>'].submit();"><?php echo $item->get_title(); ?></a></h4>
+                    <small>Postado dia <?php echo $item->get_date('d/m/Y').' às '.$item->get_date('H:i'); ?></small>
                     <div class="descricao-feed"><?php echo $item->get_description(); ?></div>
                 </div><hr>
-            <?php endforeach; ?>
-                <form method="post" name="lerfeed">
-                    <input type="hidden" name="feed_permalink" id="feed_permalink"/>
+                <form style="display:none;" method="post" name="<?php echo $nome_form; ?>" action="<?php echo URL_BASE."/noticia/".urlSEO($item->get_title()); ?>">
+                    <input type="hidden" name="feed_permalink" value="<?php echo $item->get_permalink(); ?>"/>
+                    <input type="hidden" name="titulo" value="<?php echo $item->get_title(); ?>"/>
+                    <input type="hidden" name="titulo_seo" value="<?php echo urlSEO($item->get_title()); ?>"/>
+                    <input type="hidden" name="descricao" value="<?php echo $item->get_description(); ?>"/>
+                    <input type="hidden" name="data" value="<?php echo $item->get_date(); ?>"/>
+                    <input type="hidden" name="data_formatada" value="<?php echo $item->get_date('d/m/Y').' às '.$item->get_date('H:i'); ?>"/>
                 </form>
+            <?php endforeach; ?>
             </div>
         </div>
     </div>

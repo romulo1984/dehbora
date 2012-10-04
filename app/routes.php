@@ -177,7 +177,7 @@ function perfil() {
 function noticia($titulo){
     $app = Slim::getInstance();
     
-    $permalink = $_POST['feed_permalink'];
+    $dados_feed = $_POST;
     
-    $app->render('noticia.php', array('feed_permalink' => $permalink));
+    $app->render('noticia.php', array('dados_feed' => $dados_feed));
 }
