@@ -20,6 +20,14 @@
     include('/templates/inc/nav_home.php');
     include('/templates/inc/sidebar.php');
 ?>
+<script type="text/javascript">
+    function lerFeed(permalink, titulo) {
+        document.getElementById("feed_permalink").value = permalink;
+        document.lerfeed.action="<?php echo URL_BASE; ?>/noticia/" + titulo;
+        document.lerfeed.submit();
+    }
+</script>
+
 <div class="row">
     <div class="span4">
         <div class="well">
@@ -28,12 +36,16 @@
             <span class="divider"></span>
             <div style="overflow-y:scroll;overflow-x: hidden;height: 500px;">
             <?php foreach ($rss as $item):?>
+                <?php $link_permanente = urlSEO($item->get_title()); ?>
                 <div class="item-feed">
-                    <h4><a href="#"><?php echo $item->get_title(); ?></a></h4>
+                        <h4><a href="javascript:void(0);" onclick="lerFeed('<?php echo $item->get_permalink(); ?>','<?php echo $link_permanente; ?>');"><?php echo $item->get_title(); ?></a></h4>
                     <small>Postado dia <?php echo $item->get_date('d/m/Y | H:i'); ?></small>
                     <div class="descricao-feed"><?php echo $item->get_description(); ?></div>
                 </div><hr>
             <?php endforeach; ?>
+                <form method="post" name="lerfeed">
+                    <input type="hidden" name="feed_permalink" id="feed_permalink"/>
+                </form>
             </div>
         </div>
     </div>

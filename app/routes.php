@@ -8,12 +8,7 @@ $app->get("/login", "login");
 $app->post("/entrar", "entrar");
 $app->get("/logout", "logout");
 $app->get("/perfil", $authenticate($app), "perfil");
-$app->get("/noticias", $authenticate($app), "noticias");
-
-//function home() {
-//    $app = Slim::getInstance();
-//    $app->render('home.php');
-//}
+$app->post("/noticia/:titulo", $authenticate($app), "noticia");
 
 function home() {
     $app = Slim::getInstance();
@@ -177,4 +172,12 @@ function perfil() {
     echo "<h2>Esta é a página do Perfil</h2>";
     $user = $app->view()->getData('user');
     var_dump($user);
+}
+
+function noticia($titulo){
+    $app = Slim::getInstance();
+    
+    $permalink = $_POST['feed_permalink'];
+    
+    $app->render('noticia.php', array('feed_permalink' => $permalink));
 }
