@@ -1,14 +1,23 @@
 <?php
-    class Connection extends PDO {
-        private $dsn = 'mysql:dbname=dehbora;host=www.redetribuna.com.br';
-        private $user = 'tribunaonline';
-        private $password = 'tribunaonline1';
+    class Connection extends PDO{
+        private $datasource;
+        private $dbname;
+        private $host;
+        private $user;
+        private $password;
         public $handle = null;
 
         function __construct() {
             try {
                 if ($this->handle == null) {
-                    $dbh = parent::__construct( $this->dsn , $this->user , $this->password);
+                    $dbConfig = new DbConfig();
+                    $this->setDatasource($dbConfig->default['datasource']);
+                    $this->setDbName($dbConfig->default['dbname']);
+                    $this->setHost($dbConfig->default['host']);
+                    $this->setUser($dbConfig->default['user']);
+                    $this->setPassword($dbConfig->default['password']);
+                    
+                    $dbh = parent::__construct( "$this->datasource:dbname=$this->dbname;host=$this->host" , $this->user , $this->password);
                     $this->handle = $dbh;
                     return $this->handle;
                 }
@@ -19,17 +28,19 @@
             }
         }
 
-        public function setDsn($dsn){
-            $this->dsn = $dsn;
+        public function setDatasource($datasource){
+            $this->datasource = $datasource;
+        }
+        public function setHost($host){
+            $this->host = $host;
+        }
+        public function setDbName($dbname){
+            $this->dbname = $dbname;
         }
         public function setUser($user){
             $this->user = $user;
         }
-        public function setSenha($password){
+        public function setPassword($password){
             $this->password = $password;
         }
-        
-//        function __destruct() {
-//            $this->handle = NULL;
-//        }
 }

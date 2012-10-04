@@ -1,3 +1,11 @@
+##########################
+## Meus arquivos ignorados
+##########################
+
+*.spc
+classes/DbConfig.php
+cache
+
 #################
 ## Eclipse
 #################
