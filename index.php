@@ -24,7 +24,7 @@ $authenticate = function ($app) {
         if (!isset($_SESSION['dehbora']['user'])) {
             $_SESSION['dehbora']['urlRedirect'] = $app->request()->getPathInfo();
             $app->flash('error', 'Você precisa se logar.');
-            $app->redirect(URL_BASE.'/login');
+            $app->redirect(URL_BASE.'/inicial');
         }
     };
 };

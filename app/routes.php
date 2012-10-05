@@ -4,8 +4,8 @@ $app->get("/", $authenticate($app), "home");
 $app->get("/feeds/:id", $authenticate($app), "feeds");
 $app->post("/feeds/add", $authenticate($app), "add_feed");
 $app->delete("/feeds/detetar", $authenticate($app), "deletar_feed");
-$app->get("/login", "login");
-$app->post("/entrar", "entrar");
+$app->get("/inicial", "inicial");
+$app->post("/login", "login");
 $app->get("/logout", "logout");
 $app->get("/perfil", $authenticate($app), "perfil");
 $app->post("/noticia/:titulo", $authenticate($app), "noticia");
@@ -119,16 +119,16 @@ function deletar_feed(){
     
 }
 
-function login() {
+function inicial() {
     $app = Slim::getInstance();
     
     if(isset($_SESSION['dehbora']['user'])){
         $app->redirect(URL_BASE);
     }else{
-        $app->render('login.php');
+        $app->render('inicial.php');
     }
 }
-function entrar() {
+function login() {
     $app = Slim::getInstance();
     $login = new Login();
 
@@ -144,7 +144,7 @@ function entrar() {
     
     if (count($errors) > 0) {
         $app->flash('errors', $errors);
-        $app->redirect(URL_BASE.'/login');
+        $app->redirect(URL_BASE.'/inicial');
         exit;
     }
     
@@ -164,7 +164,7 @@ function logout() {
     $l = new Login();
     $l->logout();
     $app->view()->setData('user', null);
-    $app->redirect(URL_BASE.'/login');
+    $app->redirect(URL_BASE.'/inicial');
 }
 
 function perfil() {
