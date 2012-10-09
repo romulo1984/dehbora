@@ -36,17 +36,24 @@
             </iframe>
         </div>
         <div class="span4">
+            <?php if(isset($_SESSION['slim.flash']['errors'])) { ?>
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <h4>Seu cadastro não foi realizado!</h4>
+                    <?php foreach($_SESSION['slim.flash']['errors'] as $er) echo "* ".$er."<br />"; ?>
+                </div>
+            <?php } ?>
             <div class="well">
-                <form>
+                <form method="POST" action="<?php echo URL_BASE; ?>/newuser">
                     <h3>Cadastre-se!</h3><br />
                     <label>Nome completo:</label>
-                    <input type="text"/>
+                    <input type="text" name="nome"/>
                     <label>E-mail:</label>
-                    <input type="text"/>
+                    <input type="text" name="email"/>
                     <label>Senha:</label>
-                    <input type="password"/>
+                    <input type="password" name="senha"/>
                     <label>Confirme a senha:</label>
-                    <input type="password"/><br /><br />
+                    <input type="password" name="confirma_senha"/><br /><br />
                     <button type="submit" class="btn">Cadastrar</button>
                 </form>
             </div>

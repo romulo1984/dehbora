@@ -116,4 +116,8 @@
                 return false;
             }
         }
+        
+        public function ultimoId(){
+            return $this->pdo->lastInsertId();
+        }
 }

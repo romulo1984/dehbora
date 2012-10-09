@@ -10,6 +10,29 @@ $app->get("/logout", "logout");
 $app->get("/perfil", $authenticate($app), "perfil");
 $app->post("/noticia/:titulo", $authenticate($app), "noticia");
 
+$app->post("/newuser", "newuser");
+
+function newuser(){
+    $app = Slim::getInstance();
+    
+    $user = new Usuario();
+    
+    $user->setNome($_POST['nome']);
+    $user->setEmail($_POST['email']);
+    $user->setSenha($_POST['senha'], $_POST['confirma_senha']);
+    
+    if($user->CriarUsuario()){
+        $user->insereFeeds($user->idInserido);
+        $user->primeiroLogin();
+        $app->flash('sucesso', "Parabéns! Seu cadastro foi realizado com sucesso, e você já pode adicionar bases de notícias, avaliar e receber recomendações.");
+        $app->redirect(URL_BASE.'/');
+    }else{
+        $app->flash('errors', $user->erros);
+        $app->redirect(URL_BASE.'/inicial');
+    }
+    
+}
+
 function home() {
     $app = Slim::getInstance();
     $feeds = new Crud();
