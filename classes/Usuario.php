@@ -109,8 +109,8 @@ class Usuario {
         $add_feed3->setTabela('feeds');
         $add_feed3->inserir(
             array(
-                "nome" => "EXAME Gestão",
-                "url" => "http://feeds.feedburner.com/Exame-Gestao",
+                "nome" => "Folha Vitória - Entretenimento",
+                "url" => "http://www.folhavitoria.com.br/feed/entretenimento",
                 "publico" => 1,
                 "id_user" => $idUser
             )

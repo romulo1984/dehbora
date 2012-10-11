@@ -12,6 +12,23 @@ $app->post("/noticia/:titulo", $authenticate($app), "noticia");
 
 $app->post("/newuser", "newuser");
 
+
+$app->get("/teste", "teste");
+
+function teste(){
+    $app = Slim::getInstance();
+    
+    $feed = new SimplePie();
+    
+    $feed->set_feed_url('http://g1.globo.com/Noticias');
+    $feed->init();
+    
+    foreach ($feed->get_all_discovered_feeds() as $link)
+    {
+            echo $link->url . "<br />";
+    }
+}
+
 function newuser(){
     $app = Slim::getInstance();
     
@@ -52,7 +69,7 @@ function home() {
     $read->enable_cache(true);
     $read->set_feed_url($url_feed_inicial);
 
-    //$read->enable_cache(false);
+
     $read->init();
     $app->render('home.php', array('rss' => $read->get_items()));
 }
@@ -80,10 +97,13 @@ function feeds($id) {
 
     if(count($l) > 0){
         $read = new SimplePie();
-        $read->enable_cache(true);
+        $read->enable_cache(false);
         $read->set_feed_url($l[0]['url']);
+        $read->set_url_replacements(array('a' => 'href', 'img' => 'src'));
+        $read->strip_htmltags(array('a'));
 
         $read->init();
+        $read->handle_content_type();
         $app->render('home.php', array('rss' => $read->get_items(), 'nome' => $l[0]['nome']));
     } else {
         echo "Esta página não existe";
@@ -94,15 +114,22 @@ function add_feed(){
     $app = Slim::getInstance();
     
     $count_erro = 0;
+    $erro_url = 0;
     
     if(!$_POST['nome']){
         $count_erro += 1;
     } elseif(!$_POST['url']){
         $count_erro += 1;
+    } elseif(!preg_match('|^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $_POST['url'])){
+        $erro_url = 1;
     }
     
     if($count_erro > 0){
         $app->flash('errors', 'Os campos <strong>NOME</strong> e <strong>URL</strong> são obrigatórios!');
+        $app->redirect(URL_BASE.'/');
+        exit;
+    }elseif($erro_url == 1){
+        $app->flash('errors', 'O campo <strong>URL</strong> deve ser um URL válido. (o prefixo http:// é obrigatório)!');
         $app->redirect(URL_BASE.'/');
         exit;
     }
