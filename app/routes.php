@@ -9,26 +9,101 @@ $app->post("/login", "login");
 $app->get("/logout", "logout");
 $app->get("/perfil", $authenticate($app), "perfil");
 $app->post("/noticia/:titulo", $authenticate($app), "noticia");
+$app->post("/noticia/avaliar/", $authenticate($app), "avaliar");
 
 $app->post("/newuser", "newuser");
 
-
-$app->get("/teste", "teste");
-
-function teste(){
+function avaliar(){
     $app = Slim::getInstance();
+    $user = $app->view()->getData('user');
     
-    $feed = new SimplePie();
+    //print_r($_POST);die;
+    $titulo = $_POST['dados']['titulo'];
+    $permalink = $_POST['dados']['permalink'];
+    $data = $_POST['dados']['data'];
+    $nota = $_POST['nota'];
     
-    $feed->set_feed_url('http://g1.globo.com/Noticias');
-    $feed->init();
+    //1 - Verifica se a notícia já foi cadastrada
+    $b_noticia = new Crud();
+    $b_noticia->setTabela("noticias");
     
-    foreach ($feed->get_all_discovered_feeds() as $link)
-    {
-            echo $link->url . "<br />";
+    $noticia_result = $b_noticia->consultar(array("id"), "permalink = '".$permalink."'");
+    $noticia_result = $noticia_result->fetch(PDO::FETCH_ASSOC);
+    
+    if($noticia_result == ""){
+        //Se não existir esta notícia cadastrada, cadastra Notícia
+        $add_noticia = new Crud();
+        $add_noticia->setTabela("noticias");
+        
+        $add = $add_noticia->inserir(
+                array(
+                    "titulo" => $titulo,
+                    "permalink" => $permalink,
+                    "pubDate" => $data
+                )
+        );
+        
+        if($add){
+            //Se adicionou com sucesso, retorna ID da notícia adicionada
+            $id_noticia = $add_noticia->ultimoId();
+        }else{
+            //Se houver erro ao adicionar, retorna erro e encerra o script
+            echo "Erro ao atribuir nota";
+            exit;
+        }
+    }else{
+        //Se já existir notícia, busca seu ID
+        $id_noticia = $noticia_result['id'];
     }
-}
+    
+    //2 - Verifica se já deu a nota
+    $b_nota = new Crud();
+    $b_nota->setTabela("notas");
+    
+    $nota_result = $b_nota->consultar(array("id"), "id_user = ".$user['id']." AND id_noticia = ".$id_noticia);
+    $nota_result = $nota_result->fetch(PDO::FETCH_ASSOC);
 
+    if($nota_result == ""){
+        //Se não deu nota ainda, dá a nota
+        $add_nota = new Crud();
+        $add_nota->setTabela("notas");
+        
+        $nota_add = $add_nota->inserir(
+                array(
+                    "nota" => $nota,
+                    "id_user" => $user['id'],
+                    "id_noticia" => $id_noticia
+                )
+        );
+        
+        if(!$nota_add){
+            //Se não conseguir add a nota, retorna um erro e encerra script
+            echo "Erro ao atribuir nota";
+            exit;
+        }
+        
+    }else {
+        //Se já deu, então atualiza a nota
+        $atualiza_nota = new Crud();
+        $atualiza_nota->setTabela("notas");
+        
+        $up_nota = $atualiza_nota->atualizar(
+                array(
+                    "nota" => $nota
+                ),
+                "id = ".$nota_result['id']
+        );
+        
+        if($up_nota != 1){
+            //Se não for possível atualizar a nota, retorna erro
+            echo "Erro ao atribuir nota";
+            exit;
+        }
+    }
+    
+    $app->redirect(URL_BASE.'/templates/avaliacao.php?permalink='.$permalink.'&iduser='.$user['id']);
+    
+}
 function newuser(){
     $app = Slim::getInstance();
     
@@ -49,7 +124,6 @@ function newuser(){
     }
     
 }
-
 function home() {
     $app = Slim::getInstance();
     $feeds = new Crud();
@@ -109,7 +183,6 @@ function feeds($id) {
         echo "Esta página não existe";
     }
 }
-
 function add_feed(){
     $app = Slim::getInstance();
     
@@ -164,11 +237,9 @@ function add_feed(){
         $app->redirect(URL_BASE.'/');
     }
 }
-
 function deletar_feed(){
     
 }
-
 function inicial() {
     $app = Slim::getInstance();
     
@@ -208,7 +279,6 @@ function login() {
 
     $app->redirect(URL_BASE);
 }
-
 function logout() {
     $app = Slim::getInstance();
     $l = new Login();
@@ -216,14 +286,12 @@ function logout() {
     $app->view()->setData('user', null);
     $app->redirect(URL_BASE.'/inicial');
 }
-
 function perfil() {
     $app = Slim::getInstance();
     echo "<h2>Esta é a página do Perfil</h2>";
     $user = $app->view()->getData('user');
     var_dump($user);
 }
-
 function noticia($titulo){
     $app = Slim::getInstance();
     

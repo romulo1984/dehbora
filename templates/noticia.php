@@ -28,6 +28,9 @@ include('/templates/inc/header.php');
         -moz-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
         -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     }
+    .cinza {
+        background: #ccc;
+    }
 </style>
 <div class="container">
     <div class="navbar navbar-fixed-top">
@@ -69,32 +72,45 @@ include('/templates/inc/header.php');
     </div>
     <div class="row" style="margin-top:46px;">
         <div class="span9">
-                <?php
-                    echo "<small>";
-                    echo "<strong>Título:</strong> ".$dados_feed['titulo']."<br />";
-                    if(isset($dados_feed['descricao'])){
-                        echo "<strong>Descrição:</strong> ".$dados_feed['descricao']."<br />";
-                    }
-                    echo "<strong>Link original:</strong> <a href='".$dados_feed['feed_permalink']."' target='_blank'>Clique aqui</a><br />";
-                    echo "<strong>Data:</strong> ".$dados_feed['data_formatada']."<br /><br />";
-                    echo "</small>";
-                ?>
+            <?php
+            echo "<small>";
+            echo "<strong>Título:</strong> " . $dados_feed['titulo'] . "<br />";
+            echo "<strong>Link original:</strong> <a href='" . $dados_feed['feed_permalink'] . "' target='_blank'>Clique aqui</a><br />";
+            echo "<strong>Data:</strong> " . $dados_feed['data_formatada'] . "<br /><br />";
+            echo "</small>";
+            echo "<div style='display:none;'>";
+            echo "<input type='hidden' name='titulo' value='".$dados_feed['titulo']."'/>";
+            echo "<input type='hidden' name='permalink' value='".$dados_feed['feed_permalink']."'/>";
+            echo "<input type='hidden' name='data' value='".$dados_feed['data']."'/>";
+            echo "</div>";
+            ?>
         </div>
-        <div class="span3">
-            <div class="pull-right">
-                Aqui fica a nota
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var titulo = $("input[name=titulo]").attr("value");
+                var permalink = $("input[name=permalink]").attr("value");
+                var data = $("input[name=data]").attr("value");
+                $("#carregando").css("display", "block");
+                $('#avaliacao').load('<?php echo URL_BASE; ?>/templates/avaliacao.php', {dados: {titulo:titulo, permalink:permalink, data:data}, userid:<?php echo $user['id']; ?>}, function(){
+                    $("#carregando").css("display", "none");
+                });
+            })
+        </script>
+        <div class="span3" id="avaliacao">
+            <div id="carregando" style="display: none;position:absolute; margin-left: 140px; margin-top: 16px;; z-index: 9">
+                <img src="<?php echo URL_BASE; ?>/public/img/loader.gif"/>
             </div>
         </div>
     </div>
 </div>
 <div class="shadow" style="width:100%; height: 10px; background: #0088cc;"></div>
 <div>
-<IFRAME
-    src="<?php echo $dados_feed['feed_permalink']; ?>"
-    frameborder="0"
-    noresize="noresize"
-    style="position:absolute;background:transparent;width:100%;height:100%;padding:0;z-index:-1;">
-</IFRAME>
+    <IFRAME
+        src="<?php echo $dados_feed['feed_permalink']; ?>"
+        frameborder="0"
+        noresize="noresize"
+        style="position:absolute;background:transparent;width:100%;height:100%;padding:0;z-index:-1;">
+    </IFRAME>
 </div>
 </body>
 </html>
