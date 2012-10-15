@@ -13,7 +13,7 @@
             <li class=""><a href="#"><i class="icon-question-sign"></i> Como funciona?</a></li>
             <li class=""><a href="#"><i class="icon-info-sign"></i> Sobre</a></li>
             </ul>
-            <form class="navbar-form pull-right" method="POST" action="/dehbora/login">
+            <form class="navbar-form pull-right" method="POST" action="<?php echo URL_BASE; ?>/login">
               <input class="span2" type="text" name="email" placeholder="E-mail">
               <input class="span2" type="password" name="senha" placeholder="Senha">
               <button type="submit" class="btn">Entrar</button>

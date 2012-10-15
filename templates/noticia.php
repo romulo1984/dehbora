@@ -14,7 +14,7 @@ $js = func_js(
 );
 $meta = func_meta("Dehbora | " . $dados_feed['titulo']);
 
-include('/templates/inc/header.php');
+include(URL_BASE.'/templates/inc/header.php');
 ?>
 <style type="text/css">
     body {
@@ -62,7 +62,7 @@ include('/templates/inc/header.php');
                                 <li><a href="#"><i class="icon-pencil"></i> Perfil</a></li>
                                 <li><a href="#"><i class="icon-heart"></i> Amigos</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/dehbora/logout"><i class="icon-off"></i> Logout</a></li>
+                                <li><a href="<?php echo URL_BASE; ?>/logout"><i class="icon-off"></i> Logout</a></li>
                             </ul>
                         </li>
                     </ul>

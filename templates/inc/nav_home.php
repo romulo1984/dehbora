@@ -27,7 +27,7 @@
                         <li><a href="#"><i class="icon-pencil"></i> Perfil</a></li>
                         <li><a href="#"><i class="icon-heart"></i> Amigos</a></li>
                         <li class="divider"></li>
-                        <li><a href="/dehbora/logout"><i class="icon-off"></i> Logout</a></li>
+                        <li><a href="<?php echo URL_BASE; ?>/logout"><i class="icon-off"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
