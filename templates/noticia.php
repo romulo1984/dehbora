@@ -14,7 +14,7 @@ $js = func_js(
 );
 $meta = func_meta("Dehbora | " . $dados_feed['titulo']);
 
-include(URL_BASE.'/templates/inc/header.php');
+include('/templates/inc/header.php');
 ?>
 <style type="text/css">
     body {

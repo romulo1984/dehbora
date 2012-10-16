@@ -16,8 +16,8 @@
     );
     $meta = func_meta("Dehbora");
 
-    include(URL_BASE.'/templates/inc/header.php');
-    include(URL_BASE.'/templates/inc/nav_inicial.php');
+    include('/templates/inc/header.php');
+    include('/templates/inc/nav_inicial.php');
 ?>
 <div class="container content-top">
     <div class="row">
