@@ -16,9 +16,9 @@
     );
     $meta = func_meta("Dehbora");
 
-    include('/templates/inc/header.php');
-    include('/templates/inc/nav_home.php');
-    include('/templates/inc/sidebar.php');
+    include('templates/inc/header.php');
+    include('templates/inc/nav_home.php');
+    include('templates/inc/sidebar.php');
 ?>
 <div class="row">
     <div class="span4">
@@ -141,4 +141,4 @@
     </div>
 </div>
 <?php
-    include('/templates/inc/footer.php');
+    include('templates/inc/footer.php');
