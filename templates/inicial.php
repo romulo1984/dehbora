@@ -21,19 +21,8 @@
 ?>
 <div class="container content-top">
     <div class="row">
-        <div class="span12">
-            <div class="alert alert-info">
-                <h3>Descubra uma nova forma de receber recomendações. Descubra Dehbora!</h3>
-            </div>
-        </div>
         <div class="span8">
-            <iframe
-                src="http://player.vimeo.com/video/8812686?title=0&amp;byline=0&amp;portrait=0&amp;color=ff9933"
-                width="100%"
-                height="440"
-                frameborder="0"
-                webkitAllowFullScreen mozallowfullscreen allowFullScreen>
-            </iframe>
+            <img src="<?php echo URL_BASE; ?>/public/img/grafico-dehbora.jpg" height="100%" width="100%"/>
         </div>
         <div class="span4">
             <?php if(isset($_SESSION['slim.flash']['errors'])) { ?>
@@ -58,6 +47,13 @@
                 </form>
             </div>
         </div>
+        <!--
+        <div class="span12">
+            <div class="alert alert-info">
+                <h3>Descubra uma nova forma de receber recomendações. Descubra Dehbora!</h3>
+            </div>
+        </div>
+        -->
         <div class="span4">
             <h3>A opinião de seus amigos é importante?</h3>
             <p>Dehbora reúne as preferências não só de seus amigos, mas de toda a base de usuários.
@@ -78,4 +74,4 @@
     </div>
 </div>
 <?php
-    //include(URL_BASE.'/templates/inc/footer.php');
+    include('templates/inc/footer.php');

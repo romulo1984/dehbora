@@ -6,8 +6,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="<?php echo URL_BASE; ?>/inicial">Dehbora</a>
-        <div class="nav-collapse">
+            <a class="brand" href="<?php echo URL_BASE; ?>/inicial"><div class="logo"></div></a>
+        <div style="margin-top: 25px;" class="nav-collapse">
             <ul class="nav">
             <li class=""><a href="<?php echo URL_BASE; ?>/inicial"><i class="icon-home"></i> Home</a></li>
             <li class=""><a href="#"><i class="icon-question-sign"></i> Como funciona?</a></li>

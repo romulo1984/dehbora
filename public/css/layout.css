@@ -9,7 +9,7 @@ body {
     background:#ddd;
 }
 .content-top {
-    margin-top: 50px;
+    margin-top: 110px;
 }
 .cinza {
     color: grey;
@@ -41,6 +41,40 @@ body {
 }
 hr {
     border-top: 1px solid #999;
+}
+
+.logo {
+    background: url("../img/logo-dehbora-duplo.png") no-repeat;
+    width:150px;
+    height:70px;
+}
+.logo:hover {
+    background-position: 0 -70px;
+}
+.logo-footer {
+    position: relative;
+    float: left;
+    background: url("../img/logo-dehbora-footer.png") no-repeat;
+    margin-top: 10px;
+    width:120px;
+    height:56px;
+}
+.logo-footer:hover {
+    background-position: 0 -56px;
+}
+
+.footer {
+    background: #da1f6e;
+    height: 100px;
+}
+
+.copyright {
+    margin-top: 20px;
+    position: relative;
+    float: right;
+    width: 500px;
+    color: #fff;
+    text-align: right;
 }
 /*
 ::-webkit-scrollbar {
