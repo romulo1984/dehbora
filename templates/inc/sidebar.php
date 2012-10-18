@@ -98,3 +98,13 @@
                             </div>
                         </div>
                         <?php } ?>
+                        
+                        <?php if(preg_match('|MSIE ([0-9].[0-9]{1,2})|',$_SERVER['HTTP_USER_AGENT'])) { ?>
+                        <div class="span8">
+                            <div class="alert alert-error">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Usuário de Internet Explorer detectado!</h4>
+                                Tudo bem, não é nenhum pecado, mas para tirar total proveito do Dehbora, experimente utilizar um navegador mais moderno, como o Chrome, Firefox ou Opera.
+                            </div>
+                        </div>
+                        <?php } ?>

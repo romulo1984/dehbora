@@ -101,7 +101,7 @@ function avaliar(){
         }
     }
     
-    $app->redirect(URL_BASE.'/templates/avaliacao.php?permalink='.$permalink.'&iduser='.$user['id']);
+    $app->redirect(URL_BASE.'/templates/avaliacao.php?permalink='.base64_encode($permalink).'&iduser='.$user['id']);
     
 }
 function newuser(){

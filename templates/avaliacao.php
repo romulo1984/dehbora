@@ -4,13 +4,15 @@ include("../classes/DbConfig.php");
 include("../classes/Connection.php");
 include("../classes/Crud.php");
 
+$nota_dada = "Avaliar esta notícia";
+
 $noticia = new Crud();
 $noticia->setTabela("noticias");
 
 if(isset($_POST['dados']['permalink'])){
     $permalink = $_POST['dados']['permalink'];
 }else{
-    $permalink = $_GET['permalink'];
+    $permalink = base64_decode($_GET['permalink']);
 }
 if(isset($_POST['userid'])){
     $iduser = $_POST['userid'];
@@ -44,10 +46,7 @@ if(isset($no)){
     }elseif($no['nota'] == 5){
         $nota_dada = '<img src="'.URL_BASE.'/public/img/5-stars.png"/>';
     }
-}else{
-    $nota_dada = "Avaliar esta notícia";
 }
-
 ?>
 <script type="text/javascript">
     $(document).ready(function(){                

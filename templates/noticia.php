@@ -75,7 +75,7 @@ include('templates/inc/header.php');
             <?php
             echo "<small>";
             echo "<strong>Título:</strong> " . $dados_feed['titulo'] . "<br />";
-            echo "<strong>Link original:</strong> <a href='" . $dados_feed['feed_permalink'] . "' target='_blank'>Clique aqui</a><br />";
+            echo "<strong>Link original:</strong> <a href='" . $dados_feed['feed_permalink'] . "' target='_blank'>" . $dados_feed['feed_permalink'] . "</a><br />";
             echo "<strong>Data:</strong> " . $dados_feed['data_formatada'] . "<br /><br />";
             echo "</small>";
             echo "<div style='display:none;'>";

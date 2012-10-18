@@ -39,7 +39,10 @@ body {
     margin-top: 6px;
     position:relative;
 }
-
+hr {
+    border-top: 1px solid #999;
+}
+/*
 ::-webkit-scrollbar {
     width: 8px;
     height: 10px;
@@ -59,3 +62,4 @@ body {
     background-color: #ccc;
     -webkit-border-radius: 3px;
 }
+*/
