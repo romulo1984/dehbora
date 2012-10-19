@@ -30,9 +30,23 @@
                 <div class="span12">
                     <div class="row">
                         <div class="span4">
+                            <div class="alert">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <img src="<?php echo URL_BASE; ?>/public/img/alerts-1.png"/>
+                            </div>
                             <div class="well">
-                                <ul class="nav nav-list">
-                                    <li class="nav-header"><i class="icon-tag"></i> Feeds Cadastrados</li>
+                                <i class="icon-tag"></i> Feeds Cadastrados
+                                <form style="margin-top: 20px;">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-filter"></i></span>
+                                            <input type="text" value="" name="searchrss" id="searchrss" placeholder="Filtrar feeds"/>
+                                            <span class="input-loader-feeds" style="margin-left: 10px; width: 24px; display: none;">
+                                                <img style="margin-bottom: 5px;" src="<?php echo URL_BASE; ?>/public/img/loader-mini.gif"/>
+                                            </span>
+                                        </div>
+                                    </form>
+                                <div style="overflow-y:auto; height: 200px;" class="box-scroll">
+                                <ul class="nav nav-list" id="alvosearchrss" >
                                     <?php
                                         $lista_feeds = new Crud();
                                         $lista_feeds->setTabela('feeds');
@@ -42,9 +56,8 @@
                                                 'id_user ='.$user['id'],
                                                 'created DESC'
                                              )->fetchAll(PDO::FETCH_ASSOC);
-                                        
                                         foreach($l_f as $l){
-                                            echo '<li class="';
+                                            echo '<li class="li-rss ';
                                             if(isset($id_feed_atual) && $id_feed_atual == $l['id']){
                                                 echo "active";
                                             }
@@ -53,18 +66,12 @@
                                         
                                         $nome_feed_inicial = $l_f[0]['nome'];
                                     ?>
+                                </ul>
+                                </div>
+                                <ul class="nav nav-list">
+                                    <li class="divider"></li>
                                     <li><a href="#addFeed" style="color: green !important;" data-toggle="modal"><i class="icon-plus"></i> Adicionar Feed</a></li>
                                     <li><a href="#" style="color: green !important;"><i class="icon-edit"></i> Gerenciar Feeds</a></li>
-                                    <li class="divider"></li>
-                                    <li class="nav-header"><i class="icon-heart"></i> Notícias Avaliadas (Categorias)</li>
-                                    <p>
-                                        <span class="label">tecnologia</span>
-                                        <span class="label">internet</span>
-                                        <span class="label">redes sociais</span>
-                                        <span class="label">blog</span>
-                                        <span class="label">invenções</span>
-                                        <span class="label">qualquer coisa</span>
-                                    </p>
                                 </ul>
                             </div>
                              <div class="well img-margin">

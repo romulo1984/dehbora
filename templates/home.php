@@ -35,23 +35,36 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
     $(function(){
         /* Live Search para os Feeds */
         $('input#searchdom').quicksearch('div#alvosearch div.item-feed',
-        {
-            'delay': 300,
-            'loader': 'span.input-loader',
-            'noResults': 'Nenhum resultado'
-        }
-    );
+            {
+                'delay': 300,
+                'loader': 'span.input-loader',
+                'noResults': 'Nenhum resultado'
+            }
+        );
+            
+        $('input#searchrss').quicksearch('ul#alvosearchrss li.li-rss',
+            {
+                'delay': 300,
+                'loader': 'span.input-loader-feeds',
+                'noResults': 'Nenhum resultado'
+            }
+        );
+            
         $(".box-scroll").mCustomScrollbar();
     });
 </script>
 <div class="row">
     <div class="span4">
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <img src="<?php echo URL_BASE; ?>/public/img/alerts-2.png"/>
+        </div>
         <div class="well">
             <i class="icon-tag"></i> Feeds de <span class="label label-info"><?php if (isset($nome)) echo $nome; else echo $nome_feed_inicial; ?></span>
             <form style="margin-top: 20px;">
                 <div class="input-prepend">
                     <span class="add-on"><i class="icon-filter"></i></span>
-                    <input type="text" value="" name="searchdom" id="searchdom" placeholder="Filtrar feeds" autofocus/>
+                    <input type="text" value="" name="searchdom" id="searchdom" placeholder="Filtrar noticias" autofocus/>
                     <span class="input-loader" style="margin-left: 10px; width: 24px; display: none;">
                         <img style="margin-bottom: 5px;" src="<?php echo URL_BASE; ?>/public/img/loader-mini.gif"/>
                     </span>
@@ -80,7 +93,11 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
         </div>
     </div>
     <div class="span4">
-        <div class="well">
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <img src="<?php echo URL_BASE; ?>/public/img/alerts-3.png"/>
+        </div>
+        <div class="well" style="background-image: url('../public/img/bg-logo.png');background-position: top right;background-repeat: no-repeat">
             <i class="icon-tag"></i> <span class="label label-success">Notícias Recomendadas</span>
             <form style="margin-top: 20px;">
                 <div class="input-prepend">
