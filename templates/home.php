@@ -32,8 +32,8 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
 }
 ?>
 <script type="text/javascript">
-    $(function(){
-        /* Live Search para os Feeds */
+    $(document).ready(function(){
+        /* Live Search para as Notícias */
         $('input#searchdom').quicksearch('div#alvosearch div.item-feed',
             {
                 'delay': 300,
@@ -41,7 +41,8 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
                 'noResults': 'Nenhum resultado'
             }
         );
-            
+        
+        /* Live Search para os Feeds */
         $('input#searchrss').quicksearch('ul#alvosearchrss li.li-rss',
             {
                 'delay': 300,
@@ -49,8 +50,20 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
                 'noResults': 'Nenhum resultado'
             }
         );
+        
+        
             
         $(".box-scroll").mCustomScrollbar();
+        
+        //Carrega com Ajax as recomendações
+        $("#load_recomendacoeso").css("display", "block");
+        $("#recomendacoes").load("<?php echo URL_BASE; ?>/recomendacoes", function(response, status, xhr){
+                if (status == "error") {
+                    var msg = "Um erro ocorreu ao carregar a página: ";
+                    $("#recomendacoes").html(msg + xhr.status + " " + xhr.statusText);
+                }
+                $("#load_recomendacoes").css("display", "none");
+            });
     });
 </script>
 <div class="row">
@@ -73,7 +86,10 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
             <span class="divider"></span>
             <div style="overflow-y:auto; height: 500px;" id="alvosearch" class="box-scroll">
                 <?php foreach ($rss as $item): ?>
-                    <?php $nome_form = rand(); ?>
+                    <?php
+                        $nome_form = rand();
+                        $permalink = base64_encode($item->get_permalink());
+                    ?>
                     <div class="item-feed">
                         <h4><a href="javascript:void(0);" onclick="document['<?php echo $nome_form; ?>'].submit();"><?php echo $item->get_title(); ?></a></h4>
                         <small>Postado dia <?php echo $item->get_date('d/m/Y') . ' às ' . $item->get_date('H:i'); ?></small>
@@ -81,7 +97,7 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
                         <hr>
                     </div>
                     <form style="display:none;" method="post" name="<?php echo $nome_form; ?>" action="<?php echo URL_BASE . "/noticia/" . urlSEO($item->get_title()); ?>">
-                        <input type="hidden" name="feed_permalink" value="<?php echo $item->get_permalink(); ?>"/>
+                        <input type="hidden" name="feed_permalink" value="<?php echo $permalink; ?>"/>
                         <input type="hidden" name="titulo" value="<?php echo $item->get_title(); ?>"/>
                         <input type="hidden" name="titulo_seo" value="<?php echo urlSEO($item->get_title()); ?>"/>
                         <input type="hidden" name="descricao" value="<?php echo strip_tags($item->get_description()); ?>"/>
@@ -102,98 +118,19 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
             <form style="margin-top: 20px;">
                 <div class="input-prepend">
                     <span class="add-on"><i class="icon-filter"></i></span>
-                    <input type="text" value="" placeholder="Filtrar recomendações"/>
+                    <input type="text" value="" placeholder="Filtrar recomendações" name="searchrecomendacoes" id="searchrecomendacoes"/>
                     <span class="input-loader-recomendacoes" style="margin-left: 10px; width: 24px; display: none;">
                         <img style="margin-bottom: 5px;" src="<?php echo URL_BASE; ?>/public/img/loader-mini.gif"/>
                     </span>
                 </div>
             </form>
             <span class="divider"></span>
-            <div style="overflow-y:auto; height: 500px;" class="box-scroll">
-                <h4><a href="#">Juiz da PB manda PF prender diretor do Google no Brasil</a></h4>
-                <small class="cinza">Postado 2012/08/02 20h47</small>
-                <p>São Paulo - O juiz da propaganda eleitoral de mídia e internet de Campina Grande (PB), Ruy Jander, decretou nesta sexta a prisão...</p>
-                <div>
-                    <div class="pull-left">
-                        <span class="label">tecnologia</span>
-                        <span class="label">internet</span>
-                    </div>
-                </div><br /><br />
-                <div class="btn-group">
-                    <button class="btn btn-mini">Recomendar</button>
-                    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-                        Avaliar
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                    </ul>
-                </div>
-                <br /><hr>
-                <h4><a href="#">Juiz da PB manda PF prender diretor do Google no Brasil</a></h4>
-                <small class="cinza">Postado 2012/08/02 20h47</small>
-                <p>São Paulo - O juiz da propaganda eleitoral de mídia e internet de Campina Grande (PB), Ruy Jander, decretou nesta sexta a prisão...</p>
-                <div>
-                    <div class="pull-left">
-                        <span class="label">tecnologia</span>
-                        <span class="label">internet</span>
-                    </div>
-                </div><br /><br />
-                <div class="btn-group">
-                    <button class="btn btn-mini">Recomendar</button>
-                    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-                        Avaliar
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                    </ul>
-                </div>
-                <br /><hr>
-                <h4><a href="#">Twitter envia mensagens de manifestante de Wall Street a juiz</a></h4>
-                <small class="cinza">Postado 2012/08/02 20h47</small>
-                <p>Nova York - O Twitter entregou mensagens de um manifestante do movimento Ocupe Wall Street a um juiz criminal de Nova York nesta sexta-feira depois...</p>
-                <div>
-                    <div class="pull-left">
-                        <span class="label">redes sociais</span>
-                        <span class="label">bolsa de valores</span>
-                        <span class="label">internet</span>
-                        <span class="label">tecnologia</span>
-                    </div>
-                </div><br /><br />
-                <div class="btn-group">
-                    <button class="btn btn-mini">Recomendar</button>
-                    <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-                        Avaliar
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                        <li><a href="#"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></a></li>
-                    </ul>
-                </div>
-                <br /><hr>
-                <div class="pagination">
-                    <ul>
-                        <li><a href="#">Anterior</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Próximo</a></li>
-                    </ul>
-                </div>
+            <div id="load_recomendacoes" style="display: block; position:absolute; z-index: 9; text-align: center;margin-left: 80px; margin-top: 16px;">
+                <span>Aguarde...</span><br />
+                <span>Gerando recomendações.</span><br />
+                <span><img src="<?php echo URL_BASE; ?>/public/img/loader.gif"/></span>
+            </div>
+            <div style="overflow-y:auto; height: 500px;" id="recomendacoes" class="box-scroll-recomendacoes">
             </div>
         </div>
     </div>

@@ -73,14 +73,15 @@ include('templates/inc/header.php');
     <div class="row" style="margin-top:46px;">
         <div class="span9">
             <?php
+            $feed_permalink = base64_decode($dados_feed['feed_permalink']);
             echo "<small>";
             echo "<strong>Título:</strong> " . $dados_feed['titulo'] . "<br />";
-            echo "<strong>Link original:</strong> <a href='" . $dados_feed['feed_permalink'] . "' target='_blank'>" . $dados_feed['feed_permalink'] . "</a><br />";
+            echo "<strong>Link original:</strong> <a href='" . $feed_permalink . "' target='_blank'>" . $feed_permalink . "</a><br />";
             echo "<strong>Data:</strong> " . $dados_feed['data_formatada'] . "<br /><br />";
             echo "</small>";
             echo "<div style='display:none;'>";
             echo "<input type='hidden' name='titulo' value='".$dados_feed['titulo']."'/>";
-            echo "<input type='hidden' name='permalink' value='".$dados_feed['feed_permalink']."'/>";
+            echo "<input type='hidden' name='permalink' value='".$feed_permalink."'/>";
             echo "<input type='hidden' name='data' value='".$dados_feed['data']."'/>";
             echo "</div>";
             ?>
@@ -106,7 +107,7 @@ include('templates/inc/header.php');
 <div class="shadow" style="width:100%; height: 10px; background: #0088cc;"></div>
 <div>
     <IFRAME
-        src="<?php echo $dados_feed['feed_permalink']; ?>"
+        src="<?php echo $feed_permalink; ?>"
         frameborder="0"
         noresize="noresize"
         style="position:absolute;background:transparent;width:100%;height:100%;padding:0;z-index:-1;">

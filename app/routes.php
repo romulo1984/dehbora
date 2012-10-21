@@ -10,9 +10,97 @@ $app->get("/logout", "logout");
 $app->get("/perfil", $authenticate($app), "perfil");
 $app->post("/noticia/:titulo", $authenticate($app), "noticia");
 $app->post("/noticia/avaliar/", $authenticate($app), "avaliar");
+$app->get("/recomendacoes", $authenticate($app), "recomendacoes");
 
 $app->post("/newuser", "newuser");
 
+function recomendacoes(){
+    $app = Slim::getInstance();
+    $user = $app->view()->getData('user');
+    $id_user = $user['id'];
+    
+    $a = new Crud();
+    $a->setTabela("notas");
+    $r_a = $a->consultar(array("id_noticia", "nota"), "id_user = $id_user", "id_noticia");
+    $result = $r_a->fetchAll(PDO::FETCH_ASSOC);
+    
+    $notas = array();
+    foreach($result as $r){
+        $notas[$r["id_noticia"]] = $r['nota'];
+    }
+    
+    $noticias = array_keys($notas);
+    $noticias = implode(", ", $noticias);
+    
+    $b = new Crud();
+    $b->setTabela("notas");
+    $r_b = $b->consultar(array("id_user", "id_noticia", "nota"), "id_user <> $id_user AND id_noticia IN($noticias)", "id_noticia");
+    $result_todos = $r_b->fetchAll(PDO::FETCH_ASSOC);
+    
+    $todos_users = array();
+    foreach($result_todos as $r){
+        $todos_users[$r['id_user']][$r['id_noticia']] = $r['nota'];
+    }
+    
+    $comparacao = array();
+    $ids_users_validos = array();
+    foreach($todos_users as $key => $value){
+        $comparacao[] = array_values(array_intersect_key($notas, $todos_users[$key]));
+        $comparacao[] = array_values(array_intersect_key($todos_users[$key], $notas));
+        
+        $p = new Pearson($comparacao);
+        $pearson = $p->calcula();
+        
+        if($pearson > 0.29){
+            $ids_users_validos[] = $key;
+        }
+        
+        $comparacao = array();
+        $person = null;
+    }
+    
+    $ids_v = implode(", ", array_values($ids_users_validos));
+    
+    $recomendacoes = new Crud();
+    $recomendacoes->setTabela("notas");
+    $ids_v_noticias = $recomendacoes->consultar(array("id_noticia"), "id_user IN($ids_v) AND nota > 2 AND id_noticia NOT IN($noticias)");
+    
+    $dados = null;
+    if($ids_v_noticias == ""){
+        $padrao = new Crud();
+        $padrao->setTabela("notas");
+        $ids_padrao = $padrao->consultar(array("id_noticia"), "id_user <> $id_user AND nota > 2 AND id_noticia NOT IN($noticias)");
+        
+        $ids = array();
+        foreach($ids_padrao->fetchAll(PDO::FETCH_ASSOC) as $i){
+            $ids[] = $i['id_noticia'];
+        }
+        
+        $dehbora = implode(", ", array_values($ids));
+        
+        $n = new Crud();
+        $n->setTabela("noticias");
+        $n_result = $n->consultar(array("titulo, permalink, pubDate"), "id IN($dehbora)", "pubDate", "20");
+
+        $dados = $n_result->fetchAll(PDO::FETCH_ASSOC);
+    }else {
+        $ids = array();
+        foreach($ids_v_noticias->fetchAll(PDO::FETCH_ASSOC) as $i){
+            $ids[] = $i['id_noticia'];
+        }
+
+        $dehbora = implode(", ", array_values($ids));
+
+        $n = new Crud();
+        $n->setTabela("noticias");
+        $n_result = $n->consultar(array("titulo, permalink, pubDate"), "id IN($dehbora)", "pubDate", "20");
+
+        $dados = $n_result->fetchAll(PDO::FETCH_ASSOC);
+    }    
+    
+    $app->render('recomendacoes.php', array('dados' => $dados));
+    //echo_pre($dados);
+}
 function avaliar(){
     $app = Slim::getInstance();
     $user = $app->view()->getData('user');
@@ -285,12 +373,6 @@ function logout() {
     $l->logout();
     $app->view()->setData('user', null);
     $app->redirect(URL_BASE.'/inicial');
-}
-function perfil() {
-    $app = Slim::getInstance();
-    echo "<h2>Esta é a página do Perfil</h2>";
-    $user = $app->view()->getData('user');
-    var_dump($user);
 }
 function noticia($titulo){
     $app = Slim::getInstance();
