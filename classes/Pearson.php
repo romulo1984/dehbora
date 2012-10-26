@@ -1,12 +1,12 @@
 <?php
     class Pearson {
         private $list =  array();
-        
+
         public function __construct($list) {
             if(is_array($list)){
                 $this->setList($list);
             }else{
-                echo "O argumento passado no construtor não é um Array";
+                echo "O parâmetro passado no construtor não é um Array";
             }
         }
         
