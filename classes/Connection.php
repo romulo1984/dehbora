@@ -11,11 +11,11 @@
             try {
                 if ($this->handle == null) {
                     $dbConfig = new DbConfig();
-                    $this->setDatasource($dbConfig->default['datasource']);
-                    $this->setDbName($dbConfig->default['dbname']);
-                    $this->setHost($dbConfig->default['host']);
-                    $this->setUser($dbConfig->default['user']);
-                    $this->setPassword($dbConfig->default['password']);
+                    $this->setDatasource($dbConfig->hostgator['datasource']);
+                    $this->setDbName($dbConfig->hostgator['dbname']);
+                    $this->setHost($dbConfig->hostgator['host']);
+                    $this->setUser($dbConfig->hostgator['user']);
+                    $this->setPassword($dbConfig->hostgator['password']);
                     
                     $dbh = parent::__construct( "$this->datasource:dbname=$this->dbname;host=$this->host" , $this->user , $this->password);
                     $this->handle = $dbh;
