@@ -5,7 +5,8 @@ $css = func_css(
             URL_BASE . "/public/css/bootstrap.css",
             URL_BASE . "/public/css/bootstrap-responsive.css",
             URL_BASE . "/public/css/layout.css",
-            URL_BASE . "/public/css/jquery.mCustomScrollbar.css"
+            URL_BASE . "/public/css/jquery.mCustomScrollbar.css",
+            URL_BASE . "/public/js/introjs/introjs.css"
         )
 );
 $js = func_js(
@@ -16,7 +17,8 @@ $js = func_js(
             URL_BASE . "/public/js/custom.js",
             URL_BASE . "/public/js/jquery-ui.min.js",
             URL_BASE . "/public/js/jquery.mousewheel.min.js",
-            URL_BASE . "/public/js/jquery.mCustomScrollbar.js"
+            URL_BASE . "/public/js/jquery.mCustomScrollbar.js",
+            URL_BASE . "/public/js/introjs/intro.js"
         )
 );
 $meta = func_meta("Dehbora");
@@ -33,6 +35,9 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
+
+        $('#bem-vindo').modal('show');
+
         /* Live Search para as Notícias */
         $('input#searchdom').quicksearch('div#alvosearch div.item-feed',
             {
@@ -67,11 +72,19 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
     });
 </script>
 <div class="row">
-    <div class="span4">
+    <div class="span4" data-step="3" data-intro="
+                                                Aqui você visualiza as últimas entradas do Feed<br />
+                                                que foi selecionado a esquerda. Ao clicar em uma<br />
+                                                das notícias abaixo você será redirecionado para<br />
+                                                a página com a notícia integral, podendo avaliá-la."
+                                        data-position="left">
+        <!--
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <img src="<?php echo URL_BASE; ?>/public/img/alerts-2.png"/>
         </div>
+        -->
+        
         <div class="well">
             <i class="icon-tag"></i> Feeds de <span class="label label-info"><?php if (isset($nome)) echo $nome; else echo $nome_feed_inicial; ?></span>
             <form style="margin-top: 20px;">
@@ -108,12 +121,14 @@ if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
             </div>
         </div>
     </div>
-    <div class="span4">
+    <div class="span4" data-step="4" data-intro="Após avaliar algumas notícias você já poderá ver aqui várias recomendações. Divirta-se!" data-position="left">
+        <!--
         <div class="alert alert-info">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <img src="<?php echo URL_BASE; ?>/public/img/alerts-3.png"/>
         </div>
-        <div class="well" style="background-image: url('../public/img/bg-logo.png');background-position: top right;background-repeat: no-repeat">
+        -->
+        <div class="well">
             <i class="icon-tag"></i> <span class="label label-success">Notícias Recomendadas</span>
             <form style="margin-top: 20px;">
                 <div class="input-prepend">

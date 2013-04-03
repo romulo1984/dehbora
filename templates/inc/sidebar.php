@@ -25,15 +25,33 @@
   </div>
 </div>
 
+<div id="bem-vindo" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3><div class="logo"></div>Bem-vindo ao Dehbora!</h3>
+  </div>
+  <div class="modal-body">
+    <p>Nós iremos guiá-lo em um tour explicativo, para que você possa aproveitar ao máximo a experiência de usar o Dehbora.<br />
+       Clique em Avançar para percorrer pelas etapas do Tour, e Voltar para retornar ao passo anterior. <img src="<?php echo URL_BASE;?>/public/img/rss.png"/>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Fechar</a>
+    <a data-dismiss="modal" class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Iniciar Tour</a>
+    </form>
+  </div>
+</div>
+
 <div class="container content-top">
             <div class="row">
                 <div class="span12">
                     <div class="row">
-                        <div class="span4">
+                        <div class="span4" data-step="1" data-intro="Esta área contem todos os seus feeds cadastrados." data-position="right">
+                            <!--
                             <div class="alert">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <img src="<?php echo URL_BASE; ?>/public/img/alerts-1.png"/>
                             </div>
+                            -->
                             <div class="well">
                                 <i class="icon-tag"></i> Feeds Cadastrados
                                 <form style="margin-top: 20px;">
@@ -70,7 +88,7 @@
                                 </div>
                                 <ul class="nav nav-list">
                                     <li class="divider"></li>
-                                    <li><a href="#addFeed" style="color: green !important;" data-toggle="modal"><i class="icon-plus"></i> Adicionar Feed</a></li>
+                                    <li><a href="#addFeed" style="color: green !important;" data-toggle="modal" data-step="2" data-intro="Clicando neste botão você adiciona novos feeds." data-position="right"><i class="icon-plus"></i> Adicionar Feed</a></li>
                                     <li><a href="#" style="color: green !important;"><i class="icon-edit"></i> Gerenciar Feeds</a></li>
                                 </ul>
                             </div>

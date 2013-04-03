@@ -16,7 +16,7 @@
                     <li><a href="#"><i class="icon-edit"></i> Gerenciar Feeds</a></li>
                 </ul>
             </li>
-            <li class=""><a href="#"><i class="icon-question-sign"></i> Como funciona?</a></li>
+            <li class=""><a href="#bem-vindo" data-toggle="modal"><i class="icon-question-sign"></i> Como funciona?</a></li>
             <li class=""><a href="#"><i class="icon-info-sign"></i> Sobre</a></li>
             </ul>
             <ul class="nav pull-right">
