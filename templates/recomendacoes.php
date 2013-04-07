@@ -12,6 +12,7 @@
         );
      });
 </script>       
+
 <?php foreach ($dados as $d): ?>
     <?php
     $nome_form_r = rand();

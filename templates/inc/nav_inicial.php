@@ -16,7 +16,10 @@
             <form class="navbar-form pull-right" method="POST" action="<?php echo URL_BASE; ?>/login">
               <input class="span2" type="text" name="email" placeholder="E-mail">
               <input class="span2" type="password" name="senha" placeholder="Senha">
-              <button type="submit" class="btn">Entrar</button>
+              <button type="submit" class="btn">Entrar</button><br />
+            <?php if(isset($_SESSION['slim.flash']['erro-login'])) { ?>
+                <span class="pull-right" style="color: red;"><small><?php echo $_SESSION['slim.flash']['erro-login']; ?></small></span>
+            <?php } ?>
             </form>
         </div><!--/.nav-collapse -->
         </div>

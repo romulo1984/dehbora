@@ -91,6 +91,8 @@ function recomendacoes(){
 
         $dehbora = implode(", ", array_values($ids));
 
+        //var_dump($ids_v_noticias); die;
+
         $n = new Crud();
         $n->setTabela("noticias");
         $n_result = $n->consultar(array("titulo, permalink, pubDate"), "id IN($dehbora)", "pubDate", "20");
@@ -205,6 +207,7 @@ function newuser(){
         $user->insereFeeds($user->idInserido);
         $user->primeiroLogin();
         $app->flash('sucesso', "Parabéns! Seu cadastro foi realizado com sucesso, e você já pode adicionar bases de notícias, avaliar e receber recomendações.");
+        $app->flash('primeiro_uso', TRUE);
         $app->redirect(URL_BASE.'/');
     }else{
         $app->flash('errors', $user->erros);
@@ -348,11 +351,11 @@ function login() {
     
     $errors = null;
     if($ok == false){
-        $errors = "Dados inválidos";
+        $errors = "E-mail e/ou senha estão incorretos.";
     }
     
     if (count($errors) > 0) {
-        $app->flash('errors', $errors);
+        $app->flash('erro-login', $errors);
         $app->redirect(URL_BASE.'/inicial');
         exit;
     }

@@ -31,12 +31,19 @@ $useragent = $_SERVER['HTTP_USER_AGENT'];
  
 if (preg_match('|MSIE ([0-9].[0-9]{1,2})|',$useragent)) {
     
-}
+};
+
+if(isset($_SESSION['slim.flash']['primeiro_uso'])){
+    echo "<script type='text/javascript'>$(document).ready(function(){ $('#bem-vindo').modal('show'); });</script>";
+};
+
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
 
-        $('#bem-vindo').modal('show');
+        function abrirTour(){
+            $('#bem-vindo').modal('show');
+        };
 
         /* Live Search para as Notícias */
         $('input#searchdom').quicksearch('div#alvosearch div.item-feed',
